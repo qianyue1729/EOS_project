@@ -6,8 +6,8 @@
   
     <div class="block">
       <el-radio-group v-model="searchType">
-        <el-radio label="dataId">数据ID</el-radio>
-        <el-radio label="blockId">区块ID</el-radio>
+        <el-radio :label="0">数据ID</el-radio>
+        <el-radio :label="1">区块ID</el-radio>
       </el-radio-group>
     </div>
 
@@ -15,13 +15,11 @@
       <el-button type="primary" @click="searchFile">搜索</el-button>
     </div>
     
-    <el-table v-if="filteredFiles.length" :data="filteredFiles" style="width: 100%">
-      <el-table-column prop="name" label="文件名" width="180"></el-table-column>
-      <el-table-column prop="size" label="文件大小 (KB)" width="180"></el-table-column>
-      <el-table-column prop="type" label="文件类型" width="180"></el-table-column>
-      <el-table-column prop="uploadTime" label="上传时间" width="180"></el-table-column>
+    <el-table v-if="1" :data="filteredFiles" style="width: 100%">
+      <el-table-column prop="filename" label="文件名" width="180"></el-table-column>
       <el-table-column prop="dataId" label="数据ID" width="180"></el-table-column>
       <el-table-column prop="blockId" label="区块ID" width="180"></el-table-column>
+      <el-table-column prop="fileHash" label="文件哈希值" width="180"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -31,16 +29,22 @@ import axios from 'axios';
 
 export default {
   name: 'SearchFile',
+  props: {
+    username: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
-      searchType: 'dataId',
+      searchType: 0,
       searchValue: '',
       filteredFiles: []
     }
   },
   computed: {
     placeholderText() {
-      return this.searchType === 'dataId' ? '请输入数据ID' : '请输入区块ID';
+      return this.searchType === 0 ? '请输入数据ID' : '请输入区块ID';
     }
   },
   methods: {
@@ -48,11 +52,15 @@ export default {
       try {
         const response = await axios.get('http://10.122.223.44:1234/get_files', {
           params: {
-            type: this.searchType,
-            value: this.searchValue
+            searchtype: this.searchType,
+            searchValue: this.searchValue,
+            username: this.username
           }
         });
         this.filteredFiles = response.data;
+        //test
+        console.log(response.data)
+
       } catch (error) {
         console.error('Error fetching files:', error);
       }

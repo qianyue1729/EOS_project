@@ -3,6 +3,7 @@
     <el-upload
       class="upload-demo"
       action="http://10.122.223.44:1234/upload"
+      :data="extraData"
       :on-success="handleSuccess"
       :on-error="handleError"
       :before-upload="beforeUpload">
@@ -18,10 +19,23 @@
 <script>
 export default {
   name: 'UploadFile',
+  props: {
+    username: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       uploadResponse: null
     };
+  },
+  computed: {
+    extraData() {
+      return {
+        username: this.username
+      };
+    }
   },
   methods: {
     handleSuccess(response, file, fileList) {
@@ -33,6 +47,11 @@ export default {
     },
     beforeUpload(file) {
       return true;
+    }
+  },
+  watch: {
+    username(newVal) {
+      this.extraData.username = newVal;
     }
   }
 }
