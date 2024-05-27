@@ -752,30 +752,92 @@ EOSIO_DISPATCH(tcss, (upload)(verify))
 
 ### 部署和使用
 
-以下是GPT生成的内容，应该可以参考第15步的方法部署测试
+以下为本人测试的步骤：
 
-1. **编译合约**：
-   使用EOSIO CDT工具链编译合约：
-   
-   ```sh
-   eosio-cpp -o tcss.wasm tcss.cpp --abigen
-   ```
-   
-2. **部署合约**：
-   将编译好的合约部署到EOSIO区块链上：
-   
-   ```sh
-   cleos set contract <account_name> /path/to/compiled/contract -p <account_name>@active
-   ```
-   
-3. **上传文件哈希**：
-   
-   ```sh
-   cleos push action <account_name> upload '["useraccount", "filehash"]' -p useraccount@active
-   ```
-   
-4. **验证文件哈希**：
-   ```sh
-   cleos push action <account_name> verify '["useraccount", "filehash"]' -p useraccount@active
-   ```
+#### 1.创建合约用户tcss
 
+①创建公私钥对
+
+```
+cleos create key --to-console
+```
+
+```
+Private key: 5JV8EyhgojFL1Nj6CaF83Mx7nXM3EFhQDqbFXwHLK4AxeemRM6t
+Public key: EOS7b33qtbvJpYsFcBeeX4ieJtRYjrxbHAqkHKvpZDb8dxzy8D9iu
+```
+
+②导入公私钥对
+
+```
+cleos wallet import 
+```
+
+```
+lekarin@ubuntu:~/Documents/eos_env$ cleos wallet import
+private key: imported private key for: EOS7b33qtbvJpYsFcBeeX4ieJtRYjrxbHAqkHKvpZDb8dxzy8D9iu
+```
+
+③创建用户
+
+```
+cleos create account eosio tcss EOS7b33qtbvJpYsFcBeeX4ieJtRYjrxbHAqkHKvpZDb8dxzy8D9iu
+```
+
+![image-20240527162107873](assets/image-20240527162107873.png)
+
+#### 2.部署合约
+
+```
+cleos set contract tcss ./contracts/tcss -p tcss@active
+```
+
+![image-20240527162405680](assets/image-20240527162405680.png)
+
+#### 3.上传文件哈希测试
+
+创建一个名为test的txt文件，输入123，对其进行文件SHA-256处理
+
+![image-20240527162632298](assets/image-20240527162632298.png)
+
+得到
+
+```
+a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3
+```
+
+测试上传命令
+
+```sh
+cleos push action tcss upload '["alice", "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"]' -p alice@active
+```
+
+![image-20240527163304796](assets/image-20240527163304796.png)
+
+#### 4.验证文件哈希测试
+
+验证刚刚上传的文件哈希
+
+```sh
+cleos push action tcss verify '["alice", "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"]' -p alice@active
+```
+
+![image-20240527163414398](assets/image-20240527163414398.png)
+
+输入未上传的哈希值
+
+```sh
+cleos push action tcss verify '["alice", "626788b12a153662e69d77ec2ab6cb19f25afe2aecb28c3228321f691f1c30b8"]' -p alice@active
+```
+
+![image-20240527163710122](assets/image-20240527163710122.png)
+
+输入其它用户进行验证
+
+```sh
+cleos push action tcss verify '["bob", "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3"]' -p bob@active
+```
+
+![image-20240527163837931](assets/image-20240527163837931.png)
+
+可以进行验证
