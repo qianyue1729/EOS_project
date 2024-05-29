@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Upload from '../views/upload.vue'
+import Login from '@/views/login.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -9,6 +10,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/login',
+    name: '登录',
+    component: Login 
   },
   {
     path: '/upload',

@@ -139,3 +139,54 @@ def verify_file():
 
 if __name__ == '__main__':
     app.run(host="10.122.223.44", port=1234)
+# from flask import Flask, request, jsonify
+# from flask_mysqldb import MySQL
+# import yaml
+
+# app = Flask(__name__)
+
+# # 配置数据库
+# db = yaml.load(open('db.yaml'), Loader=yaml.FullLoader)
+# app.config['MYSQL_HOST'] = db['mysql_host']
+# app.config['MYSQL_USER'] = db['mysql_user']
+# app.config['MYSQL_PASSWORD'] = db['mysql_password']
+# app.config['MYSQL_DB'] = db['mysql_db']
+
+# mysql = MySQL(app)
+
+# @app.route('/login', methods=['POST'])
+# def login():
+#     data = request.json  # 使用 JSON 来获取数据
+#     username = data['username']
+#     password = data['password']
+#     cur = mysql.connection.cursor()
+#     cur.execute("SELECT * FROM user WHERE username=%s AND password=%s", (username, password))
+#     user = cur.fetchone()
+#     cur.close()
+#     if user:
+#         return jsonify({"success": True, "message": "Login successful"}), 200
+#     else:
+#         return jsonify({"success": False, "message": "Invalid credentials"}), 401
+
+# @app.route('/register', methods=['POST'])
+# def register():
+#     data = request.json  # 使用 JSON 来获取数据
+#     username = data['username']
+#     password = data['password']
+    
+#     # 检查用户名是否已存在
+#     cur = mysql.connection.cursor()
+#     cur.execute("SELECT * FROM user WHERE username=%s", (username,))
+#     existing_user = cur.fetchone()
+#     if existing_user:
+#         return jsonify({"success": False, "message": "Username already exists"}), 400
+
+#     # 插入新用户数据
+#     cur.execute("INSERT INTO user (username, password) VALUES (%s, %s)", (username, password))
+#     mysql.connection.commit()
+#     cur.close()
+    
+#     return jsonify({"success": True, "message": "Registration successful"}), 201
+
+# if __name__ == '__main__':
+#     app.run(debug=True)

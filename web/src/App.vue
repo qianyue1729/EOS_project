@@ -46,6 +46,7 @@ export default {
   data() {
     return {
       activeTab: 'upload',
+      activeTab: 'login',
       username: 'Current User'  // replace with the actual username source
     }
   }
@@ -90,4 +91,6 @@ body, html, #app {
   margin-left: 10px;
   font-size: 16px;
 }
-</style>
+</style> 
+
+
