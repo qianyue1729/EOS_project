@@ -13,7 +13,7 @@ public:
 
     // 1. 上传文件哈希值
     [[eosio::action]]
-    void upload(name user, std::string file_hash) { // 传入:合约用户名、文件哈希值
+    void upload(name user, std::string file_hash, std::string file_name, std::string file_str) { // 传入:合约用户名、文件哈希值、文件名、文件字符串形式
         // 验证账户是否为合约用户本人
         require_auth(user);
         // EOSIO内置的get_self()函数，目的是见擦汗调用者是否为合约自身，防止未经授权的外部实体调用
@@ -25,6 +25,8 @@ public:
         // 使用emplace方法插入合约用户与记录
         file_hash_table.emplace(user, [&](auto& row) {
             row.file_hash = file_hash;
+            row.file_name = file_name;
+            row.file_str = file_str;
             row.uploader = user;
             row.timestamp = current_time_point();
         });
@@ -51,6 +53,8 @@ private:
     // 使用eosio的table类型数据结构
     struct [[eosio::table]] filehash {
         std::string file_hash; //文件哈希值
+        std::string file_name; // 文件名
+        std::string file_str; // 文件字符串形式
         name uploader; // 文件上传者
         time_point timestamp; //时间戳
         // 返回每一行的主键值，EOSIO的multi_index表每一行都需要通过唯一的主键进行标识
