@@ -124,19 +124,18 @@
         this.$refs.ruleForm.validate((valid) => {
           if (valid) {
             this.logining = true;
-            axios.post('/api/login', {
+            axios.post('http://127.0.0.1:5000/login', {
               username: this.ruleForm.username,
-              password: this.ruleForm.password,
-              type: this.type
+              password: this.ruleForm.password
             })
             .then((response) => {
               this.logining = false;
               if (response.data.success) {
-                // 登录成功，处理 response.data.data 中的数据
+                // 保存用户名到 localStorage
+                localStorage.setItem('username', this.ruleForm.username);
                 localStorage.setItem('userData', JSON.stringify(response.data.data));
-                this.$router.replace({ path: '/dashboard' }); // 假设登录后跳转到 dashboard
+                this.$router.replace({ path: '/main/upload' });
               } else {
-                // 登录失败，显示错误消息
                 this.$alert(response.data.message, '登录失败', {
                   confirmButtonText: '确定'
                 });
@@ -144,7 +143,6 @@
             })
             .catch((error) => {
               this.logining = false;
-              // 可以添加状态码判断来专门处理401错误
               if (error.response && error.response.status === 401) {
                 this.$alert(error.response.data.message, '登录失败', {
                   confirmButtonText: '确定'
@@ -168,7 +166,7 @@
               });
               return;
             }
-            axios.post('/api/register', {
+            axios.post('http://127.0.0.1:5000/register', {
               username: this.registerForm.username,
               password: this.registerForm.password
             })
@@ -206,7 +204,7 @@
     display: flex;
     justify-content: center; /* 水平居中 */
     align-items: center; /* 垂直居中 */
-    background: rgba(0, 0, 0, 0); /* 可选：添加背景半透明 */
+    background: rgba(237, 233, 233, 0); /* 可选：添加背景半透明 */
   }
   .login-page {
     border-radius: 10px;
@@ -214,7 +212,7 @@
     width: 350px;
     padding: 35px 35px 15px;
     background: #fff;
-    background: linear-gradient(to right, #8a90b8, #170404); /* 渐变背景色 */
+    background: linear-gradient(to right, #8a90b8, #c3c0c0); /* 渐变背景色 */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     backdrop-filter: blur(10px); /* 背景模糊 */
     border: none;
