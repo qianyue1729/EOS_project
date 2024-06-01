@@ -1,32 +1,51 @@
+// 文件路径: src/router/index.js
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import Upload from '../views/upload.vue'
+import Main from '@/views/main.vue'
+import UploadFile from '@/components/UploadFile.vue'
+import SearchFile from '@/components/SearchFile.vue'
+import VerifyFile from '@/components/VerifyFile.vue'
+import Intro from '@/components/introduction.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    redirect: '/main/upload'
   },
   {
-    path: '/upload',
-    name: '上传界面',
-    component: Upload
+    path: '/main',
+    name: 'Main',
+    component: Main,
+    children: [
+      {
+        path: 'upload',
+        name: 'UploadFile',
+        component: UploadFile,
+      },
+      {
+        path: 'search',
+        name: 'SearchFile',
+        component: SearchFile,
+      },
+      {
+        path: 'verify',
+        name: 'VerifyFile',
+        component: VerifyFile,
+      },
+      {
+        path: 'intro',
+        name: 'Intro',
+        component: Intro,
+      },
+    ],
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
 ]
 
 const router = new VueRouter({
-  routes
+  mode: 'history', // 使用 HTML5 History 模式
+  routes,
 })
 
 export default router
