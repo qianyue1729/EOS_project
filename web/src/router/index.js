@@ -6,6 +6,8 @@ import UploadFile from '@/components/UploadFile.vue'
 import SearchFile from '@/components/SearchFile.vue'
 import VerifyFile from '@/components/VerifyFile.vue'
 import Intro from '@/components/introduction.vue'
+import Login from '../views/login.vue'
+
 import Datalist from '@/components/Datalist.vue'
 
 Vue.use(VueRouter)
@@ -20,6 +22,7 @@ const routes = [
     name: 'Main',
     component: Main,
     children: [
+
       {
         path: 'upload',
         name: 'UploadFile',

@@ -50,7 +50,7 @@ export default {
   methods: {
     async searchFile() {
       try {
-        const response = await axios.get('http://10.122.223.44:1234/get_files', {
+        const response = await axios.get('http://127.0.0.1:5000/get_files', {
           params: {
             searchtype: this.searchType,
             searchValue: this.searchValue,
