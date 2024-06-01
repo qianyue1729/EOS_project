@@ -81,7 +81,7 @@ export default {
   name: 'Main',
   data() {
     return {
-      username: 'Current User'  // replace with the actual username source
+      username: localStorage.getItem('username') || 'Unknown User'
     }
   },
   methods: {

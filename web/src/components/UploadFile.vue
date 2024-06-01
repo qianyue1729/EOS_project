@@ -8,7 +8,7 @@
     <div class="content">
       <el-upload
         class="upload-demo"
-        action="http://10.122.223.44:1234/upload"
+        action="http://127.0.0.1:5000/upload"
         :data="extraData"
         :on-success="handleSuccess"
         :on-error="handleError"

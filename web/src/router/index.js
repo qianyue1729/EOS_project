@@ -6,19 +6,27 @@ import UploadFile from '@/components/UploadFile.vue'
 import SearchFile from '@/components/SearchFile.vue'
 import VerifyFile from '@/components/VerifyFile.vue'
 import Intro from '@/components/introduction.vue'
+import Login from '../views/login.vue'
+
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: '/main/upload'
+    redirect: 'login'
+  },
+  {
+    path: '/login',
+    name: '登录',
+    component: Login 
   },
   {
     path: '/main',
     name: 'Main',
     component: Main,
     children: [
+
       {
         path: 'upload',
         name: 'UploadFile',

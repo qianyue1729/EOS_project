@@ -89,7 +89,7 @@ export default {
       formData.append('hash', this.hashValue);
 
       try {
-        const response = await axios.post('http://10.122.223.44:1234/verify_file', formData, {
+        const response = await axios.post('http://127.0.0.1:5000/verify_file', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
