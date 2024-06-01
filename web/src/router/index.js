@@ -6,13 +6,14 @@ import UploadFile from '@/components/UploadFile.vue'
 import SearchFile from '@/components/SearchFile.vue'
 import VerifyFile from '@/components/VerifyFile.vue'
 import Intro from '@/components/introduction.vue'
+import Datalist from '@/components/Datalist.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: '/main/upload'
+    name: 'login'
   },
   {
     path: '/main',
@@ -38,6 +39,11 @@ const routes = [
         path: 'intro',
         name: 'Intro',
         component: Intro,
+      },
+      {
+        path: 'Datalist',
+        name: 'Datalist',
+        component: Datalist,
       },
     ],
   },

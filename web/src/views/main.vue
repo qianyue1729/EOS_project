@@ -17,11 +17,11 @@
             </template>
             <el-menu-item index="upload">
               <i class="el-icon-upload"></i>
-              <span slot="title">上传文件</span>
+              <span slot="title">业务存证</span>
             </el-menu-item>
-            <el-menu-item index="search">
+            <el-menu-item index="hashupload">
               <i class="el-icon-search"></i>
-              <span slot="title">查询</span>
+              <span slot="title">哈希存证</span>
             </el-menu-item>
           </el-submenu>
           <el-submenu index="2">
@@ -37,9 +37,9 @@
               <i class="el-icon-document"></i>
               <span slot="title">校验文件</span>
             </el-menu-item>
-            <el-menu-item index="intro">
+            <el-menu-item index="Datalist">
               <i class="el-icon-info"></i>
-              <span slot="title">项目介绍</span>
+              <span slot="title">已存数据</span>
             </el-menu-item>
           </el-submenu>
           <el-submenu index="3">
